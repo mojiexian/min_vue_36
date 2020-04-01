@@ -2,18 +2,22 @@
   <div class="login">
     <div class="container">
       <img src="@/assets/DenziQi.png" alt />
-      <el-form :model="loginForm" :rules="login" ref=";loginForm" class="demo-ruleForm">
+      <el-form :model="loginForm" :rules="rules" ref="loginForm" class="demo-ruleForm">
         <!-- 用户名 -->
         <el-form-item prop="username">
           <el-input placeholder="用户名" prefix-icon="iconfont icon-wode" v-model="loginForm.username"></el-input>
         </el-form-item>
         <!-- 密码 -->
         <el-form-item prop="password">
-          <el-input placeholder="密码" prefix-icon="iconfont icon-yuechi" v-model="loginForm.password"></el-input>
+          <el-input
+            placeholder="密码"
+            prefix-icon="iconfont icon-yuechi"
+            v-model="loginForm.password"
+          ></el-input>
         </el-form-item>
         <!-- 登陆 -->
         <el-form-item>
-          <el-button type="primary">登录</el-button>
+          <el-button type="primary" @click="login">登录</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -21,14 +25,15 @@
 </template>
 
 <script>
+import { login } from '@/api/user_index.js'
 export default {
   data () {
     return {
       loginForm: {
-        username: '',
-        password: ''
+        username: 'admin',
+        password: '123456'
       },
-      login: {
+      rules: {
         username: [
           { required: true, message: '请输入活动名称', trigger: 'blur' }
         ],
@@ -37,6 +42,41 @@ export default {
           { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
         ]
       }
+    }
+  },
+  methods: {
+    login () {
+      // 在次实现数据的验证
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          console.log('hhh', valid)
+          login(this.loginForm)
+            .then(res => {
+              console.log('***', res)
+              if (res.data.dta.meta.status === 200) {
+                // 进行跳转
+              } else {
+                this.$message({
+                  message: res.data.meta.msg,
+                  type: 'error'
+                })
+              }
+            })
+            .catch(err => {
+              console.log(err)
+              this.$message({
+                message: '登录失败',
+                type: 'error'
+              })
+            })
+        } else {
+          this.$message({
+            message: '数据输入不合法',
+            type: 'error'
+          })
+          return false
+        }
+      })
     }
   }
 }

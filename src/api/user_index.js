@@ -1,5 +1,5 @@
 // 1.引入axios
-import axios from '@/utils/myaxios.js'
+import axios from '@/utils/mayaxios.js'
 
 // 登录
 export const login = (data) => {

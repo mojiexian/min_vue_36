@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //   语文
+        var promise = new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                const res = 55;
+                if (res >= 60) {
+                    resolve("语文考试及格")
+                } else {
+                    reject("语文考试不及格")
+                }
+            }, 1000)
+        })
+        // 考数学
+        var promise2 = new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                const res = 61;
+                if (res >= 62) {
+                    resolve("数学考试及格")
+                } else {
+                    reject("数学考试不及格")
+                }
+            }, 2000)
+        })
+
+        test()
+        async function test() {
+            try {
+                var res = await promise;
+                console.log("111", res)
+            } catch (err) {
+                console.log(err);
+            }
+            try {
+                var res2 = await promise2;
+                console.log("222", res2)
+            } catch (err) {
+                console.log(err);
+            }
+
+        }
+    </script>
+</body>
+
+</html>
