@@ -53,8 +53,11 @@ export default {
           login(this.loginForm)
             .then(res => {
               console.log('***', res)
-              if (res.data.dta.meta.status === 200) {
+              if (res.data.meta.status === 200) {
                 // 进行跳转
+                this.$router.push({
+                  name: 'home'
+                })
               } else {
                 this.$message({
                   message: res.data.meta.msg,
